@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* newNode(int x) {
+    struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
+    temp->data = x;
+    temp->next = NULL;
+    return temp;
+}
+
+int maxOddEvenSum(struct Node* head) {
+    if (head == NULL || head->next == NULL)
+        return 0;
+    int maxSum = head->data + head->next->data;
+    struct Node* curr = head;
+    while (curr->next != NULL) {
+        int sum = curr->data + curr->next->data;
+        if (sum > maxSum)
+            maxSum = sum;
+        curr = curr->next;
+    }
+    return maxSum;
+}
+
+int main() {
+    struct Node* head = newNode(5);
+    head->next = newNode(1);
+    head->next->next = newNode(2);
+    head->next->next->next = newNode(10);
+    head->next->next->next->next = newNode(7);
+
+    printf("%d\n", maxOddEvenSum(head));
+    return 0;
+}
